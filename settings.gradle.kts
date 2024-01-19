@@ -1,4 +1,4 @@
-rootProject.name = "compose-multiplatform-library-template"
+rootProject.name = "KSend"
 
 include(":sample:androidApp")
 include(":lib")
