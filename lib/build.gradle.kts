@@ -1,11 +1,13 @@
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.dokka")
-    id("com.vanniktech.maven.publish")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.mavenPublish)
+    alias(libs.plugins.buildConfig)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -26,16 +28,36 @@ kotlin {
         }
     }
 
+    val mokoMvvmVersion = "0.16.1"
+
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
+                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.core)
+                implementation(libs.ktor.logging)
+                implementation(libs.ktor.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.kotlinx.serialization.json)
+
+                api("dev.icerock.moko:mvvm-core:$mokoMvvmVersion")
+                api("dev.icerock.moko:mvvm-compose:$mokoMvvmVersion")
             }
         }
         val androidMain by getting {
             dependencies {
+                api(libs.androidx.activityCompose)
+                api(libs.androidx.appcompat)
+                api(libs.androidx.core.ktx)
+                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.ktor.client.okhttp)
             }
         }
         val iosX64Main by getting
@@ -46,12 +68,20 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
         val desktopMain by getting {
             dependencies {
+                implementation(compose.desktop.common)
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutines.swing)
+                implementation(libs.ktor.client.okhttp)
             }
         }
     }
+
 }
 
 android {
@@ -79,7 +109,7 @@ mavenPublishing {
     // or when publishing to https://s01.oss.sonatype.org
     publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
     signAllPublications()
-    coordinates("com.example.mylibrary", "mylibrary-runtime", "1.0.0")
+    coordinates("io.github.ismai117", "KSend", "1.0.0")
 
     pom {
         name.set(project.name)
@@ -107,3 +137,4 @@ mavenPublishing {
         }
     }
 }
+

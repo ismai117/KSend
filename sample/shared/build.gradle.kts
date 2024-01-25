@@ -1,7 +1,8 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.buildConfig)
 }
 
 kotlin {
@@ -25,10 +26,13 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 api(project(":lib"))
+
+                api("moe.tlaster:precompose:1.5.10")
+
             }
         }
         val androidMain by getting {
@@ -73,4 +77,13 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+
+
+buildConfig {
+    buildConfigField("String", "API_KEY", "\"${properties.getValue("API_KEY")}\"")
+    buildConfigField("String", "ACCOUNTSID", "\"${properties.getValue("ACCOUNTSID")}\"")
+    buildConfigField("String", "AUTHTOKEN", "\"${properties.getValue("AUTHTOKEN")}\"")
+    buildConfigField("String", "SENDER_EMAIL_ADDRESS", "\"${properties.getValue("SENDER_EMAIL_ADDRESS")}\"")
+    buildConfigField("String", "SENDER_PHONE_NUMBER", "\"${properties.getValue("SENDER_PHONE_NUMBER")}\"")
 }
