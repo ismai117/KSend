@@ -1,4 +1,8 @@
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import email.EmailScreen
@@ -6,11 +10,12 @@ import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import moe.tlaster.precompose.navigation.transition.NavTransition
+import navigation.BottomNavigation
+import navigation.RootNavigation
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import sms.SmsScreen
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun App(
     modifier: Modifier = Modifier
@@ -20,34 +25,19 @@ internal fun App(
 
         val navigator = rememberNavigator()
 
-        NavHost(
-            navigator = navigator,
-            initialRoute = STARTER,
-            navTransition = NavTransition()
-        ){
-            scene(
-                route = STARTER
-            ){
-                StarterScreen(
-                    navigateToEmailScreen = {
-                        navigator.navigate(EMAIL)
-                    },
-                    navigateToSmsScreen = {
-                        navigator.navigate(SMS)
-                    }
-                )
-            }
-            scene(
-                route = EMAIL
-            ){
-                EmailScreen(
+        Scaffold(
+            bottomBar = {
+                BottomNavigation(
                     navigator = navigator
                 )
             }
-            scene(
-                route = SMS
+        ){ paddingValues ->
+            Box(
+                modifier = modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
             ){
-                SmsScreen(
+                RootNavigation(
                     navigator = navigator
                 )
             }
@@ -57,9 +47,5 @@ internal fun App(
 
 
 }
-
-const val STARTER = "starter_screen"
-const val EMAIL = "email_screen"
-const val SMS = "sms_screen"
 
 expect fun getPlatformName(): String

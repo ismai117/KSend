@@ -37,9 +37,9 @@ import dev.icerock.moko.mvvm.compose.viewModelFactory
 import email.domain.model.Recipient
 import email.factory.EmailRepositoryFactory
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.rememberNavigator
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailScreen(
     modifier: Modifier = Modifier,
@@ -78,23 +78,6 @@ fun EmailScreen(
     }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navigator.popBackStack()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
-                            contentDescription = "navigate back"
-                        )
-                    }
-                }
-            )
-        },
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState
@@ -125,7 +108,7 @@ fun EmailScreen(
 
             Column(
                 modifier = modifier
-                    .padding(top = 24.dp)
+                    .padding(top = 40.dp)
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -223,3 +206,4 @@ fun EmailScreen(
 
 
 }
+

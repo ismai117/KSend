@@ -28,16 +28,11 @@ kotlin {
         }
     }
 
-    val mokoMvvmVersion = "0.16.1"
-
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
-                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(libs.kotlinx.coroutines.core)
@@ -46,9 +41,6 @@ kotlin {
                 implementation(libs.ktor.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.kotlinx.serialization.json)
-
-                api("dev.icerock.moko:mvvm-core:$mokoMvvmVersion")
-                api("dev.icerock.moko:mvvm-compose:$mokoMvvmVersion")
             }
         }
         val androidMain by getting {

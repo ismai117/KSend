@@ -66,23 +66,6 @@ fun SmsScreen(
     var body  by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navigator.popBackStack()
-                        }
-                    ){
-                        Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
-                            contentDescription = "navigate back"
-                        )
-                    }
-                }
-            )
-        },
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState
@@ -115,7 +98,7 @@ fun SmsScreen(
 
             Column(
                 modifier = modifier
-                    .padding(top = 24.dp)
+                    .padding(top = 40.dp)
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)

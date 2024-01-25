@@ -1,3 +1,7 @@
+import org.jetbrains.compose.internal.utils.localPropertiesFile
+import org.jetbrains.kotlin.konan.properties.loadProperties
+import java.lang.System.load
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -27,11 +31,16 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 api(project(":lib"))
 
-                api("moe.tlaster:precompose:1.5.10")
+                implementation(libs.mvvm.core)
+                implementation(libs.mvvm.compose)
+
+                api(libs.precompose.navigation)
+
 
             }
         }
@@ -81,9 +90,9 @@ android {
 
 
 buildConfig {
-    buildConfigField("String", "API_KEY", "\"${properties.getValue("API_KEY")}\"")
-    buildConfigField("String", "ACCOUNTSID", "\"${properties.getValue("ACCOUNTSID")}\"")
-    buildConfigField("String", "AUTHTOKEN", "\"${properties.getValue("AUTHTOKEN")}\"")
-    buildConfigField("String", "SENDER_EMAIL_ADDRESS", "\"${properties.getValue("SENDER_EMAIL_ADDRESS")}\"")
-    buildConfigField("String", "SENDER_PHONE_NUMBER", "\"${properties.getValue("SENDER_PHONE_NUMBER")}\"")
+    buildConfigField("String", "API_KEY", "\"${loadProperties("local.properties").getProperty("API_KEY")}\"")
+    buildConfigField("String", "ACCOUNTSID", "\"${loadProperties("local.properties").getProperty("ACCOUNTSID")}\"")
+    buildConfigField("String", "AUTHTOKEN", "\"${loadProperties("local.properties").getProperty("AUTHTOKEN")}\"")
+    buildConfigField("String", "SENDER_EMAIL_ADDRESS", "\"${loadProperties("local.properties").getProperty("SENDER_EMAIL_ADDRESS")}\"")
+    buildConfigField("String", "SENDER_PHONE_NUMBER", "\"${loadProperties("local.properties").getProperty("SENDER_PHONE_NUMBER")}\"")
 }
