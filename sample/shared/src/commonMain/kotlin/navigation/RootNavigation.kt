@@ -2,11 +2,11 @@ package navigation
 
 
 import androidx.compose.runtime.Composable
-import email.EmailScreen
+import email.presentation.EmailScreen
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.transition.NavTransition
-import sms.SmsScreen
+import sms.presentation.SmsScreen
 
 
 private const val EMAIL = "email_screen"

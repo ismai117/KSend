@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.mavenPublish)
-    alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinx.serialization)
 }
 
@@ -16,6 +15,11 @@ kotlin {
     }
 
     jvm("desktop")
+
+    js {
+        browser()
+        binaries.executable()
+    }
 
     listOf(
         iosX64(),
@@ -29,6 +33,7 @@ kotlin {
     }
 
     sourceSets {
+
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -36,22 +41,22 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.ktor.core)
-                implementation(libs.ktor.logging)
-                implementation(libs.ktor.content.negotiation)
-                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.bundles.ktor.common)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.napier)
             }
         }
+
         val androidMain by getting {
             dependencies {
                 api(libs.androidx.activityCompose)
                 api(libs.androidx.appcompat)
                 api(libs.androidx.core.ktx)
                 implementation(libs.kotlinx.coroutines.android)
-                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.android)
             }
         }
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -64,14 +69,22 @@ kotlin {
                 implementation(libs.ktor.client.darwin)
             }
         }
+
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
-                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.java)
             }
         }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
+
     }
 
 }
@@ -106,7 +119,7 @@ mavenPublishing {
     pom {
         name.set(project.name)
         description.set("A description of what my library does.")
-        inceptionYear.set("2023")
+        inceptionYear.set("2024")
         url.set("https://github.com/username/mylibrary/")
         licenses {
             license {
@@ -117,16 +130,15 @@ mavenPublishing {
         }
         developers {
             developer {
-                id.set("username")
-                name.set("User Name")
-                url.set("https://github.com/username/")
+                id.set("ismai117")
+                name.set("ismai117")
+                url.set("https://github.com/ismai117/")
             }
         }
         scm {
-            url.set("https://github.com/username/mylibrary/")
-            connection.set("scm:git:git://github.com/username/mylibrary.git")
-            developerConnection.set("scm:git:ssh://git@github.com/username/mylibrary.git")
+            url.set("https://github.com/ismai117/KSend/")
+            connection.set("scm:git:git://github.com/ismai117/KSend.git")
+            developerConnection.set("scm:git:ssh://git@github.com/ismai117/KSend.git")
         }
     }
 }
-

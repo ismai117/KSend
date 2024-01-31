@@ -13,7 +13,5 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MainView()
         }
-
-        Patterns.EMAIL_ADDRESS.matcher("").matches()
     }
 }

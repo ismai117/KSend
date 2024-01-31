@@ -14,6 +14,11 @@ kotlin {
 
     jvm("desktop")
 
+    js {
+        browser()
+        binaries.executable()
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -41,14 +46,15 @@ kotlin {
 
                 api(libs.precompose.navigation)
 
+                implementation("io.github.ismai117:kottie:1.4.1")
 
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.7.2")
+                api("androidx.activity:activity-compose:1.8.2")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
+                api("androidx.core:core-ktx:1.12.0")
             }
         }
         val iosX64Main by getting
@@ -65,6 +71,12 @@ kotlin {
                 implementation(compose.desktop.common)
             }
         }
+        val jsMain by getting {
+            dependencies {
+                implementation(compose.html.core)
+            }
+        }
+
     }
 }
 
@@ -86,13 +98,4 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-}
-
-
-buildConfig {
-    buildConfigField("String", "API_KEY", "\"${loadProperties("local.properties").getProperty("API_KEY")}\"")
-    buildConfigField("String", "ACCOUNTSID", "\"${loadProperties("local.properties").getProperty("ACCOUNTSID")}\"")
-    buildConfigField("String", "AUTHTOKEN", "\"${loadProperties("local.properties").getProperty("AUTHTOKEN")}\"")
-    buildConfigField("String", "SENDER_EMAIL_ADDRESS", "\"${loadProperties("local.properties").getProperty("SENDER_EMAIL_ADDRESS")}\"")
-    buildConfigField("String", "SENDER_PHONE_NUMBER", "\"${loadProperties("local.properties").getProperty("SENDER_PHONE_NUMBER")}\"")
 }

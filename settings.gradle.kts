@@ -4,6 +4,7 @@ include(":sample:androidApp")
 include(":lib")
 include(":sample:desktopApp")
 include(":sample:shared")
+include(":sample:webApp")
 
 pluginManagement {
     repositories {
