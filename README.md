@@ -13,6 +13,7 @@ SendGrid Email & SMS library for Kotlin Multiplatform.
   <img alt="Platform iOS" src="https://img.shields.io/badge/Platform-iOS-lightgray"/>
   <img alt="Platform JVM" src="https://img.shields.io/badge/Platform-JVM-orange"/>
   <img alt="Platform Js" src="https://img.shields.io/badge/Platform-Js-yellow"/>
+  <img alt="Platform Wasm" src="https://img.shields.io/badge/Platform-Wasm-red"/>
 </p> <br>
 
 </br>
