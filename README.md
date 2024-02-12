@@ -18,5 +18,5 @@ SendGrid Email & SMS library for Kotlin Multiplatform.
 </br>
 
 <p align="center">
-  <img src="readme_images/android/Email_Screen_Light_Mode.png" height="500px">
+  <img src="readme_images/KSend.gif">
 </p>
