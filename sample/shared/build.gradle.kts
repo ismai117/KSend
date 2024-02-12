@@ -1,6 +1,8 @@
 import org.jetbrains.compose.internal.utils.localPropertiesFile
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.konan.properties.loadProperties
 import java.lang.System.load
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -15,6 +17,12 @@ kotlin {
     jvm("desktop")
 
     js {
+        browser()
+        binaries.executable()
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
         browser()
         binaries.executable()
     }
@@ -41,12 +49,8 @@ kotlin {
                 implementation(compose.components.resources)
                 api(project(":lib"))
 
-                implementation(libs.mvvm.core)
-                implementation(libs.mvvm.compose)
 
-                api(libs.precompose.navigation)
-
-                implementation("io.github.ismai117:kottie:1.4.1")
+//                implementation("io.github.ismai117:kottie:1.4.1")
 
             }
         }
@@ -98,4 +102,41 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+
+val properties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
+}
+
+buildConfig {
+    buildConfigField(
+        type = "String",
+        name = "API_KEY",
+        value = "\"${properties.getProperty("API_KEY")}\""
+    )
+    buildConfigField(
+        type = "String",
+        name = "ACCOUNTSID",
+        value = "\"${properties.getProperty("ACCOUNTSID")}\""
+    )
+    buildConfigField(
+        type = "String",
+        name = "AUTHTOKEN",
+        value = "\"${properties.getProperty("AUTHTOKEN")}\""
+    )
+    buildConfigField(
+        type = "String",
+        name = "SENDER_EMAIL_ADDRESS",
+        value = "\"${properties.getProperty("SENDER_EMAIL_ADDRESS")}\""
+    )
+    buildConfigField(
+        type = "String",
+        name = "SENDER_PHONE_NUMBER",
+        value = "\"${properties.getProperty("SENDER_PHONE_NUMBER")}\""
+    )
+    buildConfigField(
+        type = "String",
+        name = "GEMINI_API_KEY",
+        value = "\"${properties.getProperty("GEMINI_API_KEY")}\""
+    )
 }

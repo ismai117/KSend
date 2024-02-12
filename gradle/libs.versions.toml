@@ -1,24 +1,27 @@
 [versions]
 agp = "8.2.2"
-kotlin = "1.9.22"
+kotlin = "1.9.21"
 android-compileSdk= "34"
 android-minSdk= "24"
 android-targetSdk= "34"
 androidx-activityCompose = "1.8.2"
 androidx-appcompat = "1.6.1"
 androidx-core-ktx = "1.12.0"
-compose = "1.6.0"
-compose-plugin = "1.5.12"
+compose = "1.6.1"
+compose-plugin = "1.6.0-alpha01"
 dokka = "1.9.10"
 klint = "12.1.0"
 maven-publish = "0.27.0"
 napier = "2.7.1"
 buildConfig = "4.1.1"
 kotlinx-coroutines = "1.7.3"
+kotlinx-coroutines-play-services = "1.7.3"
 kotlinx-serialization = "1.6.2"
-ktor = "2.3.7"
-moko = "0.16.1"
-precompose = "1.5.10"
+ktor = "3.0.0-wasm2"
+wear-foundation="1.3.0"
+wear-material="1.3.0"
+horologist = "0.5.20"
+play-services-wearable = "18.1.0"
 
 
 
@@ -33,6 +36,7 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx-coroutines-play-services" }
 
 ktor = { group = "io.ktor", name = "ktor", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
@@ -48,11 +52,11 @@ ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "kt
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
-
-mvvm-core = { module = "dev.icerock.moko:mvvm-core" , version.ref = "moko" }
-mvvm-compose = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko" }
-
-precompose-navigation = { module = "moe.tlaster:precompose", version.ref = "precompose" }
+wear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wear-foundation" }
+wear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wear-material" }
+horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
+horologist-compose-material = { module = "com.google.android.horologist:horologist-compose-material", version.ref = "horologist" }
+play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "play-services-wearable" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
@@ -62,6 +66,7 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "klint" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }

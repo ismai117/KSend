@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
@@ -21,12 +22,25 @@ kotlin {
         binaries.executable()
     }
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+        watchosX64(),
+        watchosArm32(),
+        watchosArm64(),
+        watchosSimulatorArm64(),
+        tvosX64(),
+        tvosArm64(),
+        tvosSimulatorArm64()
+    ).forEach { target ->
+        target.binaries.framework {
             baseName = "lib"
             isStatic = true
         }
@@ -37,13 +51,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
-                implementation(compose.foundation)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.bundles.ktor.common)
                 implementation(libs.kotlinx.serialization.json)
-                implementation(libs.napier)
             }
         }
 
@@ -60,11 +70,26 @@ kotlin {
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
+        val watchosX64Main by getting
+        val watchosArm32Main by getting
+        val watchosArm64Main by getting
+        val watchosSimulatorArm64Main by getting
+        val tvosX64Main by getting
+        val tvosArm64Main by getting
+        val tvosSimulatorArm64Main by getting
+
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            watchosX64Main.dependsOn(this)
+            watchosArm32Main.dependsOn(this)
+            watchosArm64Main.dependsOn(this)
+            watchosSimulatorArm64Main.dependsOn(this)
+            tvosX64Main.dependsOn(this)
+            tvosArm64Main.dependsOn(this)
+            tvosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }
@@ -72,8 +97,6 @@ kotlin {
 
         val desktopMain by getting {
             dependencies {
-                implementation(compose.desktop.common)
-                implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.ktor.client.java)
             }
@@ -114,7 +137,7 @@ mavenPublishing {
     // or when publishing to https://s01.oss.sonatype.org
     publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
     signAllPublications()
-    coordinates("io.github.ismai117", "KSend", "1.0.2")
+    coordinates("io.github.ismai117", "KSend", "1.1.2")
 
     pom {
         name.set(project.name)

@@ -1,12 +1,9 @@
 package sms.service
 
 
-import io.github.aakira.napier.Napier
+
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.basicAuth
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.forms.submitForm
@@ -24,16 +21,7 @@ import kotlinx.serialization.json.Json
 
 class SMSService {
 
-
     private val client = HttpClient {
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) {
-                    Napier.d(tag = "sms", message = message)
-                }
-            }
-            level = LogLevel.ALL
-        }
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
@@ -60,6 +48,7 @@ class SMSService {
         val httpResponse = client.submitForm {
             url("https://api.twilio.com/2010-04-01/Accounts/${accountSID}/Messages.json")
             header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded)
+            header(HttpHeaders.AccessControlAllowOrigin, '*')
             basicAuth(
                 username = accountSID,
                 password = authToken
